@@ -7,17 +7,13 @@ var companion = function(value, env) {
 
 var literal = function(value) {
     return {
-        eval: function(env) {
-            return companion(value, env);
-        }
+        eval: (env) => companion(value, env)
     };
 }
 
 var symbol = function(name) {
     return {
-        eval: function(env) {
-            return companion(env.lookup(name), env);
-        }
+        eval: (env) => companion(env.lookup(name), env)
     }
 }
 
@@ -25,10 +21,7 @@ var symbol = function(name) {
 var def = function(symbol, body) {
     return {
         eval: function(env) {
-            return {
-                value: 'def ' + symbol,
-                env: env.extend(symbol, body.eval(env).value) 
-            }
+            return companion('def ' + symbol, env.extend(symbol, body.eval(env).value)); 
         }
     }
 }
