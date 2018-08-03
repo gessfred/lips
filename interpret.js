@@ -1,10 +1,14 @@
+var companion = function(value, env) {
+    return {
+        value: value, 
+        env: env
+    };
+}
+
 var literal = function(value) {
     return {
         eval: function(env) {
-            return {
-                value: value,
-                env: env
-            }
+            return companion(value, env);
         }
     };
 }
@@ -12,10 +16,7 @@ var literal = function(value) {
 var symbol = function(name) {
     return {
         eval: function(env) {
-            return {
-                value: env.lookup(name),
-                env: env
-            }
+            return companion(env.lookup(name), env);
         }
     }
 }
@@ -31,6 +32,8 @@ var def = function(symbol, body) {
         }
     }
 }
+
+
 module.exports = {
     'literal': literal,
     'symbol': symbol,
