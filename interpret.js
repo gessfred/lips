@@ -20,6 +20,19 @@ var symbol = function(name) {
     }
 }
 
+//Might need extendRec
+var def = function(symbol, body) {
+    return {
+        eval: function(env) {
+            return {
+                value: 'def ' + symbol,
+                env: env.extend(symbol, body.eval(env).value) 
+            }
+        }
+    }
+}
 module.exports = {
-    'literal': literal
+    'literal': literal,
+    'symbol': symbol,
+    'define': def
 }
