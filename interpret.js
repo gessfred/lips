@@ -18,6 +18,7 @@ var symbol = function(name) {
 }
 
 //Might need extendRec
+//value is not human readable
 var def = function(symbol, body) {
     return {
         eval: function(env) {
@@ -26,6 +27,11 @@ var def = function(symbol, body) {
     }
 }
 
+var lambda = function(params, body) {
+    return {
+        eval: (env) => companion()
+    }
+}
 
 module.exports = {
     'literal': literal,
