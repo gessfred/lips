@@ -28,13 +28,15 @@ var def = function(symbol, body) {
 }
 
 var lambda = function(params, body) {
+    //var companionEnv = params.
     return {
-        eval: (env) => companion()
+        eval: (env) => companion((args) => body.eval(env.extendMulti(params, args)))
     }
 }
 
 module.exports = {
     'literal': literal,
     'symbol': symbol,
-    'define': def
+    'define': def,
+    'lambda': lambda
 }
