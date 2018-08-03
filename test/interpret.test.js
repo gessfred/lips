@@ -1,21 +1,8 @@
-/*
-
-describe('Array', function() {
-  describe('#indexOf()', function() {
-    it('should return -1 when the value is not present', function() {
-      assert.equal([1,2,3].indexOf(4), -1);
-    });
-  });
-});
-
-*/
 var assert = require('assert');
 var expect = require('chai').expect;
-describe('Blobs', function() {
-  
-  it('should list a SINGLE blob on /blob/<id> GET');
-  it('should add a SINGLE blob on /blobs POST');
-  it('should update a SINGLE blob on /blob/<id> PUT');
-  it('should delete a SINGLE blob on /blob/<id> DELETE');
-});
-it('should list ALL blobs on /blobs GET', () => expect(43).to.equal(42));
+var {literal} = require('../interpret')
+
+
+it('Literal evaluated on empty env returns literal', () => expect(literal(4).eval({}).value).to.equal(4));
+const empty = {nil: 'Nil'}
+it('Literal evaluated on empty env returns env unchanged', () => expect(literal(4).eval(empty).env).to.equal(empty));
