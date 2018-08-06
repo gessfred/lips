@@ -13,7 +13,8 @@ var literal = function(value) {
 
 var symbol = function(name) {
     return {
-        eval: (env) => companion(env.lookup(name), env)
+        eval: (env) => companion(env.lookup(name), env),
+        name: name
     }
 }
 
@@ -27,10 +28,33 @@ var def = function(symbol, body) {
     }
 }
 
+var ifthen = function(cond, then, ow) {
+    return {
+        eval: function(env) {
+            return cond.eval(env).value != 0 ? then.eval(env) : ow.eval(env);
+        }
+    }
+}
+
 var lambda = function(params, body) {
     //var companionEnv = params.
     return {
-        eval: (env) => companion((args) => body.eval(env.extendMulti(params, args)))
+        eval: function(env) {
+            //either here lambda or up there something else
+            return companion((args) => body.eval(env.extendMulti(params.map(p => p.name), args)), env)
+        }
+    }
+}
+//lambda definition vs defined
+
+
+//f is necesserily a lambda
+var operator = function(f, operands) {
+    return {
+        eval: function(env) {
+            const op = f.eval(env).value;
+            return companion(op([3]), env);
+        }
     }
 }
 
@@ -38,5 +62,7 @@ module.exports = {
     'literal': literal,
     'symbol': symbol,
     'define': def,
-    'lambda': lambda
+    'lambda': lambda,
+    'ifthen': ifthen,
+    'operator': operator
 }

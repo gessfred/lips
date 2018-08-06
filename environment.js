@@ -12,7 +12,7 @@ var environment = {
     extendMulti: function(params, values) {
         var [p, ...ps] = params;
         var [v, ...vs] = values;
-        return p ? this.extend(p, v).extendMulti(ps, vs) : this;
+        return (p && v) ? this.extend(p, v).extendMulti(ps, vs) : this;
     }
 }
 
