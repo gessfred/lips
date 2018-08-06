@@ -1,4 +1,4 @@
-var environment = {
+const environment = {
     lookup: function(name) {
         throw new Error('empty environnement');
         //return (this.hasOwnProperty(name)) ? this.name : null;

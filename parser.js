@@ -1,3 +1,5 @@
+const int = /^\d+$/
+
 const lispTokenizer = function(s) {
     let i = 0
     const isDelimiter = (ch) => ch <= ' ' || ch == '(' || ch == ')'
@@ -22,29 +24,23 @@ const lispTokenizer = function(s) {
 
 const parse = function(s){
     const iterator = lispTokenizer(s)
-    const int = /^\d+$/
     //maybe need to wrap integers and strings
     const parseExpr = function(token) {
         if(token == '(') return parseList()
         else if(token == ')') throw new Error('unbalanced')
         else if(int.test(token)) return [parseInt(token)] 
-        else return [token]
+        else return [(token)]
     }
-    /*(token) => {
-        if(token == '(') parseList()
-        else if(token == ')') throw new Error('unbalanced')
-        else if(int.test(token)) [parseInt(token)] 
-        else [token] 
-    }*/
     const parseList = function() {
         const token = iterator.next()
         if(token == ')') return []
-        else return parseExpr(token) + parseList()
+        else return parseExpr(token).concat(parseList())
     }
     return parseExpr(iterator.next())
 }
 
 module.exports = {
     'lispTokenizer': lispTokenizer,
-    'parse' : parse
+    'parse' : parse,
+    'int': int
 }

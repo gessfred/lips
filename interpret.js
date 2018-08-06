@@ -1,19 +1,14 @@
-var companion = function(value, env) {
-    return {
-        value: value, 
-        env: env
-    };
-}
+const {wrapper} = require('./interpreter')
 
 var literal = function(value) {
     return {
-        eval: (env) => companion(value, env)
+        eval: (env) => wrapper(value, env)
     };
 }
 
 var symbol = function(name) {
     return {
-        eval: (env) => companion(env.lookup(name), env),
+        eval: (env) => wrapper(env.lookup(name), env),
         name: name
     }
 }
@@ -23,7 +18,7 @@ var symbol = function(name) {
 var def = function(symbol, body) {
     return {
         eval: function(env) {
-            return companion('def ' + symbol, env.extend(symbol, body.eval(env).value)); 
+            return wrapper('def ' + symbol, env.extend(symbol, body.eval(env).value)); 
         }
     }
 }
@@ -37,11 +32,11 @@ var ifthen = function(cond, then, ow) {
 }
 
 var lambda = function(params, body) {
-    //var companionEnv = params.
+    //var wrapperEnv = params.
     return {
         eval: function(env) {
             //either here lambda or up there something else
-            return companion((args) => body.eval(env.extendMulti(params.map(p => p.name), args)), env)
+            return wrapper((args) => body.eval(env.extendMulti(params.map(p => p.name), args)), env)
         }
     }
 }
@@ -53,7 +48,7 @@ var operator = function(f, operands) {
     return {
         eval: function(env) {
             const op = f.eval(env).value;
-            return companion(op([3]), env);
+            return wrapper(op([3]), env);
         }
     }
 }

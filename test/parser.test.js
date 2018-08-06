@@ -1,7 +1,7 @@
 const assert = require('assert');
 const expect = require('chai').expect;
 const {parse, lispTokenizer} = require('../parser')
-const environment = require('../environment')
+//var environment = require('../environment')
 
 describe('lispTokenizer', () => {
     it('no input', () => {
@@ -53,7 +53,9 @@ describe('parser', () => {
         expect(() => parse(')')).to.throw()
     })
     it('single input', () => {
-        expect(parse('(def)')).to.include('def')
+        const [head, ...tail] = parse('(def)')
+        expect(head).to.equal('def')
+        expect(tail).to.be.empty
     })
     it('(a b c)', () => {
         const [a, b, c, ...rest] = parse('(a b c)')
@@ -70,13 +72,25 @@ describe('parser', () => {
         expect(a).to.equal('a')
         expect(rest).to.be.empty
     })
-    it('number', () => {
+    /**
+     * Numbers should still be strings at parse time
+     * 
+     * it('simple number', () => {
+        const num = parse('(1)')
+        console.log(typeof num)
+        expect(num).to.equal(1)
+    })
+    it('names + numbers', () => {
         const [a, un, deux, ...rest] = parse('(a 1 2)')
-        /*expect(a).to.equal('a')
+        expect(a).to.equal('a')
         expect(un).to.equal(1)
         expect(deux).to.equal(2)
-        expect(rest).to.be.empty*/
+        expect(rest).to.be.empty
     })
+     * 
+     * 
+     * 
+     */
     it('nest', () => {
         /*const [a, [b, c, ...innerRest], d, ...rest] = parse('(a (b c) d)')
         expect(a).to.equal('a')
