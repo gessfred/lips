@@ -34,4 +34,14 @@ describe('evaluate (parse + eval) (text inputs)', () => {
         pureevalon('((lambda (x y) (+ x y))  1 2)', 3, arithmeticEnv)
         
     })
+    it('def GLOBAL', () => {
+        const w = evaluate('(def x 3)', environment)
+        expect(evaluate('(x)', w.env).value).to.equal(3)
+    })
+    it('def GLOBAL/LOCAL', () => {
+        
+    })
+    it('def recursive', () => {
+        
+    })
 })
