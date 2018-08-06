@@ -103,4 +103,13 @@ describe('parser', () => {
     it('bad input', () => {
 
     })
+    it('morphologies', () => {
+        expect(parse('((x y) y)')[0]).to.be.an('array')
+        expect(parse('((x y) y)')[0][0]).to.be.a('string')
+        const form = parse('((lambda (x y) (+ x y)) 1 2)')
+        expect(form[0]).to.be.an('array')
+        expect(form[0][0]).to.be.a('string')
+        expect(form[0][1]).to.be.an('array')
+        expect(form[0][1][0]).to.be.a('string')
+    })
 })

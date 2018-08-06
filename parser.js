@@ -26,7 +26,7 @@ const parse = function(s){
     const iterator = lispTokenizer(s)
     //maybe need to wrap integers and strings
     const parseExpr = function(token) {
-        if(token == '(') return parseList()
+        if(token == '(') return [parseList()]
         else if(token == ')') throw new Error('unbalanced')
         else if(int.test(token)) return [parseInt(token)] 
         else return [(token)]
@@ -36,7 +36,7 @@ const parse = function(s){
         if(token == ')') return []
         else return parseExpr(token).concat(parseList())
     }
-    return parseExpr(iterator.next())
+    return parseExpr(iterator.next())[0]
 }
 
 module.exports = {

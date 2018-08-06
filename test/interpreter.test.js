@@ -7,11 +7,14 @@ const environment = require('../environment')
 
 
 describe('evaluate (parse + eval) (text inputs)', () => {
-    const pureeval = function(s, val) {
-        const e = evaluate(s, environment)
+    const pureeval = (s, val) => pureevalon(s, val, environment)
+    
+    const pureevalon = function(s, val, env) {
+        const e = evaluate(s, env)
         expect(e.value).to.equal(val)
-        expect(e.env).to.equal(environment)
+        expect(e.env).to.equal(env)
     }
+
     it('symbol lookup in empty env should throw', () => {
         expect(() => evaluate(('(a)'), environment)).to.throw
     })
@@ -21,5 +24,14 @@ describe('evaluate (parse + eval) (text inputs)', () => {
     it('simple numeric ifs', () => {
         pureeval('(if 0 0 1)', 1)
         pureeval('(if 1 0 1)', 0)
+        pureeval('(if (0) (0) (1))', 1)
+    })
+    const arithmeticEnv = environment.extend('+', ([x, y]) => x + y)
+    it('arithmetic operators', () => {
+        pureevalon('(+ 1 2)', 3, arithmeticEnv)
+    })
+    it('trivial lambda', () => {
+        pureevalon('((lambda (x y) (+ x y))  1 2)', 3, arithmeticEnv)
+        
     })
 })
