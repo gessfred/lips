@@ -113,3 +113,6 @@ describe('parser', () => {
         expect(form[0][1][0]).to.be.a('string')
     })
 })
+
+//'a' parse
+//'' parse

@@ -8,19 +8,21 @@ const wrapper = function(value, env) {
     };
 }
 
+const flat = (x) => [].concat(x)
+
 const eval = function(x, env) {
     const [head, ...tail] = x
     if(tail.length == 0) {
-        console.log('x:'+x)
         if(int.test(x)) return wrapper(parseInt(x), env)
         else return wrapper(env.lookup(head), env)
     }
     else {
         switch(head) {
             case 'if': {
-                const [cond, then, other] = tail
-                if(eval([cond], env).value != 0) return eval([then], env)
-                else return eval([other], env)
+                const [cond, ...rest] = tail
+                const [then, ...other] = rest
+                if(eval(flat(cond), env).value != 0) return eval(flat(then), env)
+                else return eval(flat(other), env)
             } 
             case 'lambda': {
                 const [params, body] = tail
@@ -30,16 +32,19 @@ const eval = function(x, env) {
             }
             case 'def': {
                 const [[name, ...args], body, ...expr] = tail
-                if(args.length > 0) //
-                    return eval(['def'].concat([name]).concat([['lambda'].concat([args]).concat([body])].concat([expr])), env)
+                if(args.length > 0) 
+                    if(expr.length == 0)return eval(['def', [name], ['lambda', args, body]], env)
+                    else return eval(['def', [name], ['lambda', args, body]], env)
                 else {
-                    const newEnv = env.extendRec(name, (env1) => eval([].concat(body), env1).value)
-                    //console.log()
+                    const newEnv = env.extendRec(name, (env1) => eval(flat(body), env1).value)
                     return (expr.length > 0) ? eval(expr, newEnv) : wrapper('def ' + name, newEnv)
                 }
             }
+            case 'case': {
+
+            }
             default: {
-                return wrapper(eval([].concat(head), env).value(tail.map((operand) => eval([operand], env).value)), env)
+                return wrapper(eval(flat(head), env).value(tail.map((operand) => eval(flat(operand), env).value)), env)
             }
         }
     }

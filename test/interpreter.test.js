@@ -26,7 +26,11 @@ describe('evaluate (parse + eval) (text inputs)', () => {
         pureeval('(if 1 0 1)', 0)
         pureeval('(if (0) (0) (1))', 1)
     })
-    const arithmeticEnv = environment.extend('+', ([x, y]) => x + y)
+    const arithmeticEnv = environment
+    .extend('+', ([x, y]) => x + y)
+    .extend('-', ([x, y]) => x - y)
+    .extend('*', ([x, y]) => x * y)
+    .extend('>', ([x, y]) => x > y ? 1 : 0)
     it('arithmetic operators', () => {
         pureevalon('(+ 1 2)', 3, arithmeticEnv)
     })
@@ -41,7 +45,24 @@ describe('evaluate (parse + eval) (text inputs)', () => {
     it('def GLOBAL/LOCAL', () => {
         
     })
+    it('def lambda expansion', () => {
+        const w = evaluate('(def (double x) (+ x x))', arithmeticEnv)
+        pureevalon('(double 10)', 20, w.env)
+    })
+    it('def max funtion', () => {
+        const max = evaluate('(def (max x y) (if (> x y) x y))', arithmeticEnv)
+        expect(max.env).to.not.be.equal(arithmeticEnv)
+        expect(() => max.env.lookup('max')).to.not.throw
+        expect(evaluate('(max 3 5)', max.env).value).to.equal(5)
+        expect(evaluate('(max 5 3)', max.env).value).to.equal(5)
+    })
     it('def recursive', () => {
-        
+        const fact = evaluate("(def (! n) (if (> n 0) (* n (! (- n 1))) 1))", arithmeticEnv)
+        //console.log(fact.env.lookup('!'))
+        //pureevalon('(! 5)', 120, fact.env)
+        expect(fact.env).to.not.be.equal(arithmeticEnv)
+        expect(() => fact.env.lookup('!')).to.not.throw
+        console.log(fact.env.lookup('!')([3]))
+        //evaluate('(! 5)', fact.env)
     })
 })
