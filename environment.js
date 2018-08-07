@@ -2,10 +2,14 @@ const environment = {
     lookup: function(name) {
         throw new Error(name + ' not found')
     },
+    dump: function() {
+        return []
+    },
     extend: function(name, value) {
         const enclosing = this
         const exposing = Object.create(this)
         exposing.lookup = (symbol) => symbol === name ? value : enclosing.lookup(symbol)
+        exposing.dump = () => [name].concat(enclosing.dump())
         return exposing
     },
     extendMulti: function(params, values) {
@@ -16,7 +20,8 @@ const environment = {
     extendRec: function(name, expr) {
         const enclosing  = this
         const that = Object.create(this)
-        that.lookup = (symbol) => symbol === name ? expr(this) : enclosing.lookup(symbol)
+        that.lookup = (symbol) => symbol === name ? expr(that) : enclosing.lookup(symbol)
+        that.dump = () => [name].concat(enclosing.dump())
         return that
     }
 }

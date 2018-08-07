@@ -57,12 +57,9 @@ describe('evaluate (parse + eval) (text inputs)', () => {
         expect(evaluate('(max 5 3)', max.env).value).to.equal(5)
     })
     it('def recursive', () => {
-        const fact = evaluate("(def (! n) (if (> n 0) (* n (! (- n 1))) 1))", arithmeticEnv)
-        //console.log(fact.env.lookup('!'))
-        //pureevalon('(! 5)', 120, fact.env)
+        const fact = evaluate("(def (! n) (if (> n 1) (* n (! (- n 1))) 1))", arithmeticEnv)
         expect(fact.env).to.not.be.equal(arithmeticEnv)
         expect(() => fact.env.lookup('!')).to.not.throw
-        console.log(fact.env.lookup('!')([3]))
-        //evaluate('(! 5)', fact.env)
+        pureevalon('(! 5)', 120, fact.env)
     })
 })
