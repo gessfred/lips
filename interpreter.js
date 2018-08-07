@@ -44,11 +44,11 @@ const eval = function(x, env) {
             }
             case 'case': {
                 const [exprStruct, ...statements] = tail
-                const [[expri, vali], ...others] = statements
+                const [[expri, vali], others] = statements
                 if(expri == 'else') return wrapper(eval(flat(vali), env).value, env)
                 else {
-                    const expansion = ['if', ['=', exprStruct, expri], eval(vali, env).value, eval(['case', exprStruct, [others]], env).value] 
-                    return wrapper(eval(expansion, env), env)
+                    const expansion = ['if', ['=', exprStruct, expri], vali, 'case', exprStruct, others]
+                    return wrapper(eval(expansion, env).value, env)
                 }
             }
             default: {

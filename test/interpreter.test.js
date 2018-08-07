@@ -34,6 +34,7 @@ describe('evaluate (parse + eval) (text inputs)', () => {
     .extend('-', ([x, y]) => x - y)
     .extend('*', ([x, y]) => x * y)
     .extend('>', ([x, y]) => x > y ? 1 : 0)
+    .extend('=', ([x, y]) => x === y ? 1 : 0)
     describe('fp', () => {
         it('arithmetic operators', () => {
             pureevalon('(+ 1 2)', 3, arithmeticEnv)
@@ -71,8 +72,12 @@ describe('evaluate (parse + eval) (text inputs)', () => {
     })
     describe('cases', () => {
         it('trivial case with only else', () => {
-            pureevalon('(case 3 (else 2))', 2, environment)
+            pureevalon('(case 3 (else 2))', 2, arithmeticEnv)
         })
-
+        it('simple case', () => {
+            pureevalon('(case 3 (3 1) (else 3))', 1, arithmeticEnv)
+            pureevalon('(case 2 (3 1) (else 3))', 3, arithmeticEnv)
+            pureevalon('(case 2 (3 1) (2 2) (else 3))', 2, arithmeticEnv)
+        })
     })
 })
