@@ -62,4 +62,9 @@ describe('evaluate (parse + eval) (text inputs)', () => {
         expect(() => fact.env.lookup('!')).to.not.throw
         pureevalon('(! 5)', 120, fact.env)
     })
+    describe('cases', () => {
+        it('trivial case with only else', () => {
+            pureevalon('(case 3 (else 2))', 2, environment)
+        })
+    })
 })
