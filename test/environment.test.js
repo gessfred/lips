@@ -1,6 +1,6 @@
 var assert = require('assert');
 var expect = require('chai').expect;
-var environment = require('../environment')
+var environment = require('../src/core/environment')
 
 describe('environment', () => {
     const env1 = environment.extend('x', 3);

@@ -1,6 +1,6 @@
 const assert = require('assert');
 const expect = require('chai').expect;
-const {parse, lispTokenizer} = require('../parser')
+const {parse, lispTokenizer} = require('../src/core/parser')
 //var environment = require('../environment')
 
 describe('lispTokenizer', () => {
