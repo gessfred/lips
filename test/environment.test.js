@@ -25,4 +25,13 @@ describe('environment', () => {
         })
         expect(() => rec.lookup('x')).to.not.throw
     })
+    it('simple union of 2 one entry envs', () => {
+        const env1 = environment.extend('a', 1)
+        const env2 = environment.extend('b', 2)
+        const res = env1.union(env2)
+        expect(() => res.lookup('a')).to.not.throw
+        expect(() => res.lookup('b')).to.not.throw
+        expect(res.lookup('a')).to.equal(1)
+        expect(res.lookup('b')).to.equal(2)
+    })
 })
