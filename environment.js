@@ -1,31 +1,28 @@
-const Environment = function(space, f){
-    const bindings = space
-    const functionnal = f
+const Environment = function(space, recspace){
+    //const bindings = space
+    //const functionnal = f
     return {
     lookup: function(name) {
-        const g = typeof functionnal.find((x) => x === name) == 'undefined' ? bindings.get(name) : bindings.get(name)(this)
+        const g = typeof recspace.find((x) => x === name) == 'undefined' ? space.get(name) : space.get(name)(this)
         if(typeof g == 'undefined') throw new Error(name + ' not found')
         else return g
     },
     dump: function() {
-        return Array.from(bindings.keys())//[]
+        return Array.from(space.keys())
     },
     extend: function(name, value) {
-        const enclosing = this
-        const exposing = Object.create(this)
-        const clone = new Map(bindings)
+        const clone = new Map(space)
         clone.set(name, value)
-        return Environment(clone, f)
+        return Environment(clone, recspace)
     },
     extendMulti: function(params, values) {
-        var [p, ...ps] = params
-        var [v, ...vs] = values
+        const [p, ...ps] = params, [v, ...vs] = values
         return (p && v) ? this.extend(p, v).extendMulti(ps, vs) : this
     },
     extendRec: function(name, expr) {
-        const clone = new Map(bindings)
+        const clone = new Map(space)
         clone.set(name, expr)
-        const cpy = new Array(f)
+        const cpy = new Array(recspace)
         cpy.push(name)
         return Environment(clone, cpy)
     }
