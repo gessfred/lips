@@ -1,22 +1,21 @@
-const Environment = function(space){
+const Environment = function(space, f){
     const bindings = space
+    const functionnal = f
     return {
     lookup: function(name) {
-        const g = bindings.get(name)
+        const g = typeof functionnal.find((x) => x === name) == 'undefined' ? bindings.get(name) : bindings.get(name)(this)
         if(typeof g == 'undefined') throw new Error(name + ' not found')
         else return g
     },
     dump: function() {
-        return bindings.keys()//[]
+        return Array.from(bindings.keys())//[]
     },
     extend: function(name, value) {
         const enclosing = this
         const exposing = Object.create(this)
         const clone = new Map(bindings)
         clone.set(name, value)
-        //exposing.lookup = (symbol) => symbol === name ? value : enclosing.lookup(symbol)
-        //exposing.dump = () => [name].concat(enclosing.dump())
-        return Environment(clone)
+        return Environment(clone, f)
     },
     extendMulti: function(params, values) {
         var [p, ...ps] = params
@@ -24,30 +23,14 @@ const Environment = function(space){
         return (p && v) ? this.extend(p, v).extendMulti(ps, vs) : this
     },
     extendRec: function(name, expr) {
-        const enclosing  = this
-        const that = Object.create(this)
-        that.lookup = (symbol) => symbol === name ? expr(that) : enclosing.lookup(symbol)
-        that.dump = () => [name].concat(enclosing.dump())
-        /*const that = Environment(new Map(bindings))
-
-        that.lookup = function(symbol) {
-            const cpy = new Map(bindings)
-            cpy.set(name, expr(that))
-            console.log(name + ': ' + expr(that))
-            console.log(Environment(cpy).dump())
-            return Environment(cpy).lookup(symbol)
-            
-            if(symbol === name) {
-                return expr(that)
-            }
-            else {
-                return this.lookup(symbol)
-            }
-        }*/
-        return that
+        const clone = new Map(bindings)
+        clone.set(name, expr)
+        const cpy = new Array(f)
+        cpy.push(name)
+        return Environment(clone, cpy)
     }
 }}
 
-const environment = Environment(new Map())
+const environment = Environment(new Map(), new Array())
 
 module.exports = environment;

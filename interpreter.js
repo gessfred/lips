@@ -12,6 +12,7 @@ const flat = (x) => [].concat(x)
 
 const eval = function(x, env) {
     const [head, ...tail] = x
+    //console.log(env.dump() + ' _:_ ' + head + '::' + tail)
     if(tail.length == 0) {
         if(int.test(x)) return wrapper(parseInt(x), env)
         else return wrapper(env.lookup(head), env)
