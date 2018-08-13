@@ -5,19 +5,64 @@
 	left: 0;
 	width: 100%;
 	height: 45px;
-	position: fixed;
+
 }
 
 .icon {
-	width: 80px;
+	width: 120px;
 	height: 45px;
-
+	display: inline;
 }
 
+
 .logo {
-	text-align: center;
+	/*text-align: center;*/
+	float: left;
 	color: #421C52;
 	transform: rotate(90deg);
 	transform-origin: center;
 	font-size: 25px;
+}
+.logotext {
+	text-align: center;
+	float: right;
+	margin: auto;
+	height: 45px;
+	right: 0;
+}
+
+.main {
+	width: 100%;
+	height: 800px;
+	display: inline;
+}
+
+.root {
+	display: block;
+	margin: none;
+	padding: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.editor {
+	border: none;
+	resize: none;
+	background: gray;
+	width: 50%;
+	height: 100%;
+	position: absolute;
+}
+
+.console {
+	overflow:hidden;
+	background: gray;
+	left:50%;
+	width: 50%;
+	height: 100%;
+	top: 0;
+	position: relative;
 }
