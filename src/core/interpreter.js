@@ -61,8 +61,20 @@ const evalLisp = function(x, env) {
 
 const evaluate = (s, env) => evalLisp(parse(s), env)
 
+const evalAll = function(ss, startEnv) {
+    const [head, ...tail] = ss
+    try {
+        const res = evaluate(head)
+        return [res.value].concat(evalAll(tail, res.env))
+    }
+    catch {
+        return []
+    }
+} 
+
 module.exports = {
     'evalLisp': evalLisp,
     'evaluate': evaluate,
-    'wrapper': wrapper
+    'wrapper': wrapper,
+    'evalAll': evalAll
 }
