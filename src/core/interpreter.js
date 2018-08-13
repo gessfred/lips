@@ -67,7 +67,7 @@ const evalAll = function(ss, startEnv) {
         const res = evaluate(head)
         return [res.value].concat(evalAll(tail, res.env))
     }
-    catch {
+    catch(error) {
         return []
     }
 } 
