@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'gatsby-link'
 import './index.css'
+const {evaluate} = require('../core/interpreter')
 
 const Icon = (props) => (
 	<button className='icon'>
@@ -12,18 +13,28 @@ const Icon = (props) => (
 class Editor extends React.Component {
 	render() {
 		return (
-			<textarea className='editor' ref='editor'/>
+			<textarea className='editor' ref='editor' onChange={() => this.props.onUpdate(this.refs.editor.value)}/>
 		)
 	}
 }
 
 class Console extends React.Component {
+
+	constructor(props) {
+		super(props)
+		this.state = {
+			content: 'nothing'
+		}
+	}
+
+	update(content) {
+		this.setState({content: content})
+	}
+
 	render() {
 		return (
 			<div className='console'>
-				okokok
-				textarea
-				vsdnld
+				{this.state.content}
 			</div>
 		)
 	}
@@ -38,8 +49,8 @@ class App extends React.Component {
 
 		    </div>
 		    <div className='main'>
-					<Editor />
-					<Console />
+					<Editor onUpdate={(update) => this.console.update(update)}/>
+					<Console ref={(console) => this.console = console}/>
 		    </div>
 		  </div>
 		)
