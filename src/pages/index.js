@@ -1,7 +1,8 @@
 import React from 'react'
 import Link from 'gatsby-link'
 import './index.css'
-const {evaluate} = require('../core/interpreter')
+const {evalAll} = require('../core/interpreter')
+const {environment, arithmeticEnv} = require('../core/environment')
 
 const Icon = (props) => (
 	<button className='icon'>
@@ -28,13 +29,13 @@ class Console extends React.Component {
 	}
 
 	update(content) {
-		this.setState({content: content})
+		this.setState({content: evalAll(content, arithmeticEnv)})
 	}
 
 	render() {
 		return (
 			<div className='console'>
-				{this.state.content}
+				{this.state.content.map(x => <p>{x}</p>)}
 			</div>
 		)
 	}

@@ -34,4 +34,14 @@ const Environment = function(bindings, rex){
 
 const environment = Environment(new Map(), new Array())
 
-module.exports = environment;
+const arithmeticEnv = environment
+    .extend('+', ([x, y]) => x + y)
+    .extend('-', ([x, y]) => x - y)
+    .extend('*', ([x, y]) => x * y)
+    .extend('>', ([x, y]) => x > y ? 1 : 0)
+    .extend('=', ([x, y]) => x === y ? 1 : 0)
+
+module.exports = {
+    'environment': environment,
+    'arithmeticEnv': arithmeticEnv
+}
