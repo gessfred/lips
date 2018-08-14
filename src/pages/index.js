@@ -24,7 +24,7 @@ class Console extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			content: 'nothing'
+			content: ['nothing']
 		}
 	}
 
@@ -35,7 +35,18 @@ class Console extends React.Component {
 	render() {
 		return (
 			<div className='console'>
-				{this.state.content.map(x => <p>{x}</p>)}
+				{this.state.content.map(x => <div>{x}</div>)}
+			</div>
+		)
+	}
+}
+
+class Sandbox extends React.Component {
+	render() {
+		return (
+			<div className='main'>
+				<Editor onUpdate={(update) => this.console.update(update)}/>
+				<Console ref={(console) => this.console = console}/>
 			</div>
 		)
 	}
@@ -49,10 +60,7 @@ class App extends React.Component {
 					<Icon/>
 
 		    </div>
-		    <div className='main'>
-					<Editor onUpdate={(update) => this.console.update(update)}/>
-					<Console ref={(console) => this.console = console}/>
-		    </div>
+		    <Sandbox/>
 		  </div>
 		)
 	}
