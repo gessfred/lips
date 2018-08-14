@@ -38,10 +38,29 @@ const arithmeticEnv = environment
     .extend('+', ([x, y]) => x + y)
     .extend('-', ([x, y]) => x - y)
     .extend('*', ([x, y]) => x * y)
+    .extend('/', ([x, y]) => x / y)
     .extend('>', ([x, y]) => x > y ? 1 : 0)
+    .extend('>=', ([x, y]) => x >= y ? 1 : 0)
+    .extend('<', ([x, y]) => x < y ? 1 : 0)
+    .extend('<=', ([x, y]) => x <= y ? 1 : 0)
     .extend('=', ([x, y]) => x === y ? 1 : 0)
+
+const List = function(head, tail){
+
+}
+
+const Nil = (function(){
+    return {}
+}())
+
+const collections = environment
+    .extend('nil', Nil)
+    .extend('cons', ([head, ...tail]) => (tail !== Nil) ? [head].concat(tail) : [head])
+    .extend('car', (([head, ...tail]) => head))
+    .extend('cdr', (([head, ...tail]) => tail))
 
 module.exports = {
     'environment': environment,
-    'arithmeticEnv': arithmeticEnv
+    'arithmeticEnv': arithmeticEnv,
+    'collections': collections
 }

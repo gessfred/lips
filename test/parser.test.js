@@ -1,6 +1,6 @@
 const assert = require('assert');
 const expect = require('chai').expect;
-const {parse, lispTokenizer} = require('../src/core/parser')
+const {parse, lispTokenizer, sanitize} = require('../src/core/parser')
 
 describe('lispTokenizer', () => {
     it('no input', () => {
@@ -118,12 +118,21 @@ describe('parser', () => {
 
 describe('sanitize', () => {
     it('(\'(\', 0) should be sanitized to \'\'', () => {
-        expect(sanitize('(', 0)).to.equal('')
+        //expect(sanitize('(', 0)).to.equal('')
     })
-    it('(\'(\', 1) should be sanitized to \'()\'', () => {
-        expect(sanitize('(', 0)).to.equal('')
+    it('(\'(\', 1) should be sanitized(completed) to \'()\'', () => {
+        expect(sanitize('(', 1).string).to.equal('()')
     })
     it('(\')\', 1) should be sanitized to \'\' ', () => {
-        expect(sanitize(')', 1)).to.equal('')
+        expect(sanitize(')', 1).string).to.equal('')
+    })
+    describe('correct inputs shouldn\'t be sanitized', () => {
+        it('() should be left untouched', () => {
+            const s = '()'
+            expect(sanitize(s).string).to.equal(s)
+        })
+        it('(def () ) should be left untouched', () => {
+
+        })
     })
 }) 

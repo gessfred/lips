@@ -1,8 +1,9 @@
 const int = /^\d+$/
+const isDelimiter = (ch) => ch <= ' ' || ch == '(' || ch == ')'
 
 const lispTokenizer = function(s) {
     let i = 0
-    const isDelimiter = (ch) => ch <= ' ' || ch == '(' || ch == ')'
+    
     return {
         hasNext: function(){
             while (i < s.length && s.charAt(i) <= ' ') ++i
@@ -39,8 +40,39 @@ const parse = function(s){
     return parseExpr(iterator.next())[0]
 }
 
+const sanitize = function(s, caretPosition) {
+    const it = lispTokenizer(s)
+    //let stack = 0
+    let sane = ''
+    const scan = function(base, stack, head) {
+        if(it.hasNext()) {
+            const token = it.next()
+            switch(token) {
+                case ')': 
+                    if(stack <= 0) return scan(base, stack)
+                    else return scan(base + token, stack - 1)
+                case '(': 
+                    return scan(base + token, stack + 1)
+                default:
+                    return scan(base + ' ' +  token, stack)
+            }
+        }
+        else {
+            let result = base
+            for(; stack > 0; --stack){
+                result += ')'
+            }
+            return {
+                'string': result
+            }
+        }
+    }
+    return scan('', 0)
+}
+
 module.exports = {
     'lispTokenizer': lispTokenizer,
     'parse' : parse,
-    'int': int
+    'int': int,
+    'sanitize': sanitize
 }

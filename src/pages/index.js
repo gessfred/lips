@@ -3,6 +3,7 @@ import Link from 'gatsby-link'
 import './index.css'
 const {evalAll} = require('../core/interpreter')
 const {environment, arithmeticEnv} = require('../core/environment')
+const {sanitize} = require('../core/parser')
 
 const Icon = (props) => (
 	<button className='icon'>
@@ -14,7 +15,17 @@ const Icon = (props) => (
 class Editor extends React.Component {
 	render() {
 		return (
-			<textarea className='editor' ref='editor' onChange={() => this.props.onUpdate(this.refs.editor.value)}/>
+			<textarea
+				className='editor'
+				ref='editor'
+				onKeyUp={(e) => {
+					console.log(e)
+					if(e.keyCode != 13 && e.keyCode != 32 && e.keyCode != 8) {
+						this.refs.editor.value = sanitize(this.refs.editor.value).string
+						this.props.onUpdate(this.refs.editor.value)
+					}
+				}} //balance this.refs.editor
+			/>
 		)
 	}
 }
@@ -58,7 +69,6 @@ class App extends React.Component {
 			<div className='root'>
 		    <div className='topnav'>
 					<Icon/>
-
 		    </div>
 		    <Sandbox/>
 		  </div>
