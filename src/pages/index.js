@@ -11,7 +11,10 @@ const Icon = (props) => (
 		<div className='logotext'>lips</div>
 	</button>
 )
-
+const isAlphaNumeric = function(e) { // Alphanumeric only
+  var k = e.keyCode
+  return ((k>47 && k<58)||(k>64 && k<91)||(k>96 && k<123)||k==0)
+}
 class Editor extends React.Component {
 	render() {
 		return (
@@ -20,7 +23,7 @@ class Editor extends React.Component {
 				ref='editor'
 				onKeyUp={(e) => {
 					console.log(e)
-					if(e.keyCode != 13 && e.keyCode != 32 && e.keyCode != 8) {
+					if(isAlphaNumeric(e)) {
 						this.refs.editor.value = sanitize(this.refs.editor.value).string
 						this.props.onUpdate(this.refs.editor.value)
 					}

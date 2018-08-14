@@ -44,17 +44,19 @@ const sanitize = function(s, caretPosition) {
     const it = lispTokenizer(s)
     //let stack = 0
     let sane = ''
-    const scan = function(base, stack, head) {
+    const scan = function(base, stack, needSpace, needReturn, head) {
         if(it.hasNext()) {
             const token = it.next()
+            const correction = needSpace ? ' ' : ''
             switch(token) {
                 case ')': 
-                    if(stack <= 0) return scan(base, stack)
-                    else return scan(base + token, stack - 1)
+                    if(stack <= 0) return scan(base, stack, false, false)
+                    else return scan(base + token, stack - 1, false, stack - 1 == 0)
                 case '(': 
-                    return scan(base + token, stack + 1)
+                console.log('needing' + needReturn)
+                    return scan(base + correction + (needReturn ? '\n' : '') + token, stack + 1, false, false)
                 default:
-                    return scan(base + ' ' +  token, stack)
+                    return scan(base + correction + token, stack, true, false)
             }
         }
         else {
@@ -67,7 +69,7 @@ const sanitize = function(s, caretPosition) {
             }
         }
     }
-    return scan('', 0)
+    return scan('', 0, false, false)
 }
 
 module.exports = {
