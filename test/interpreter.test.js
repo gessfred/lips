@@ -1,8 +1,8 @@
 const assert = require('assert');
 const expect = require('chai').expect;
 const {parse, lispTokenizer} = require('../src/core/parser')
-const {evaluate, eval} = require('../src/core/interpreter')
-const environment = require('../src/core/environment')
+const {evaluate, evalLisp, evalAll} = require('../src/core/interpreter')
+const {environment, arithmeticEnv} = require('../src/core/environment')
 
 
 
@@ -29,12 +29,7 @@ describe('evaluate (parse + eval) (text inputs)', () => {
             pureeval('(if (0) (0) (1))', 1)
         })
     })
-    const arithmeticEnv = environment
-    .extend('+', ([x, y]) => x + y)
-    .extend('-', ([x, y]) => x - y)
-    .extend('*', ([x, y]) => x * y)
-    .extend('>', ([x, y]) => x > y ? 1 : 0)
-    .extend('=', ([x, y]) => x === y ? 1 : 0)
+    
     describe('fp', () => {
         it('arithmetic operators', () => {
             pureevalon('(+ 1 2)', 3, arithmeticEnv)
@@ -79,5 +74,22 @@ describe('evaluate (parse + eval) (text inputs)', () => {
             pureevalon('(case 2 (3 1) (else 3))', 3, arithmeticEnv)
             pureevalon('(case 2 (3 1) (2 2) (else 3))', 2, arithmeticEnv)
         })
+    })
+})
+
+describe('evalAll', () => {
+    it('evalAll should never throw', () => {
+        const isSafe = function(s){
+            expect(evalAll(s, environment)).to.throw
+        }//= (s) => expect(() => evalAll(parse(s), environment)).to.throw
+        isSafe('*/)(')
+        isSafe('a')
+        isSafe('(def x x)')
+        isSafe('(def x 3)(y)')
+        isSafe('abloublou 1 2')
+    })
+    it('evalAll simple querries', () => {
+        console.log(evalAll('(def x 3)(+ x 1)', arithmeticEnv))
+        expect(evalAll('(def x 3)(x)', environment)[1]).to.equal(3)
     })
 })
