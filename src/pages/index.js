@@ -23,10 +23,12 @@ class Editor extends React.Component {
 				className='editor'
 				ref='editor'
 				onKeyUp={(e) => {
-					console.log(e)
+
 					if(isAlphaNumeric(e)) {
-						this.refs.editor.value = sanitize(this.refs.editor.value).string
+						const update = sanitize(this.refs.editor.value, this.refs.editor.selectionStart)
+						this.refs.editor.value = update.string
 						this.props.onUpdate(this.refs.editor.value)
+						this.refs.editor.setSelectionRange(update.caretPosition, update.caretPosition)
 					}
 				}} //balance this.refs.editor
 			/>

@@ -54,11 +54,9 @@ const nil = []
 const collections = environment
     .extend('nil', nil)
     .extend('cons', function([head, tail]) {
-        console.log(head+ '::' +tail + ' === ' + [head].concat(tail))
         return (tail) ? [head].concat(tail) : [head]
     })
     .extend('car', function([head, ...tail]) {
-        console.log('HEAD: ' + head)
         return head[0]
     })
     .extend('cdr', function([head, ...tail]){

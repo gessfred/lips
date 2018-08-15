@@ -53,7 +53,6 @@ const sanitize = function(s, caretPosition) {
                     if(stack <= 0) return scan(base, stack, false, false)
                     else return scan(base + token, stack - 1, false, stack - 1 == 0)
                 case '(': 
-                console.log('needing' + needReturn)
                     return scan(base + correction + (needReturn ? '\n' : '') + token, stack + 1, false, false)
                 default:
                     return scan(base + correction + token, stack, true, false)
@@ -65,7 +64,8 @@ const sanitize = function(s, caretPosition) {
                 result += ')'
             }
             return {
-                'string': result
+                'string': result,
+                'caretPosition': caretPosition
             }
         }
     }
