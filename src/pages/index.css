@@ -1,6 +1,7 @@
-html {
+/*html {
 	background: black;
-}
+}*/
+
 .topnav {
 	background: white;
 	margin: none;
@@ -12,12 +13,17 @@ html {
 }
 
 .icon {
-		background: white;
-		border: none;
+	background: white;
+	border: none;
 	width: 120px;
 	height: 45px;
 	display: inline;
 	margin: auto;
+	margin-left: 12px;
+}
+
+.icon:hover {
+	background: #DFE7ED;
 }
 
 
@@ -88,4 +94,21 @@ html {
 	top: 0;
 	position: relative;
 	padding: 1%;
+}
+
+.topnavitem {
+	height: 45px;
+	width: 45px;
+	font-size: 30px;
+	font-weight: bold;
+	border: none;
+	margin: auto;
+	margin-left: 16px;
+	background: white;
+	color: darkgray;
+}
+
+.topnavitem:hover {
+	color: #DFE7ED;
+	border-radius: 50px;
 }

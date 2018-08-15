@@ -2,8 +2,9 @@ import React from 'react'
 import Link from 'gatsby-link'
 import './index.css'
 const {evalAll} = require('../core/interpreter')
-const {environment, arithmeticEnv} = require('../core/environment')
+const {environment, globalEnv} = require('../core/environment')
 const {sanitize} = require('../core/parser')
+import logoFont from '../resources/VAG Rounded Bold.ttf'
 
 const Icon = (props) => (
 	<button className='icon'>
@@ -43,10 +44,11 @@ class Console extends React.Component {
 	}
 
 	update(content) {
-		this.setState({content: evalAll(content, arithmeticEnv)})
+		this.setState({content: evalAll(content, globalEnv)})
 	}
 
 	render() {
+		//write line number
 		return (
 			<div className='console'>
 				{this.state.content.map(x => <div>{x}</div>)}
@@ -77,13 +79,39 @@ class REPL extends React.Component {
 }
 
 class App extends React.Component {
+
+	constructor(props) {
+		super(props)
+		this.state = {
+			tabs: [<Sandbox/>],
+			activeTab: 0
+		}
+	}
+//onClick={() => this.setState({activeTab: i})}
+	tabButton(x, i) {
+		return (
+			<button
+				className='topnavitem'
+				onClick={() => this.setState({activeTab: i})}
+			>
+				{i + 1}
+			</button>
+		)
+	}
+
 	render() {
 		return (
 			<div className='root'>
 		    <div className='topnav'>
 					<Icon/>
+					{this.state.tabs.map((x, i) => this.tabButton(x, i))}
+					<button className='topnavitem' onClick={() => {
+						const update = this.state.tabs.slice()
+						update.push(<REPL/>)
+						this.setState({tabs: update})
+					}}>+</button>
 		    </div>
-		    <Sandbox/>
+		    {this.state.tabs[this.state.activeTab]}
 		  </div>
 		)
 	}
