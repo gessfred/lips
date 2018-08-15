@@ -1,5 +1,8 @@
+html {
+	background: black;
+}
 .topnav {
-	background: #43464B;
+	background: white;
 	margin: none;
 	top: 0;
 	left: 0;
@@ -9,20 +12,25 @@
 }
 
 .icon {
+		background: white;
+		border: none;
 	width: 120px;
 	height: 45px;
 	display: inline;
+	margin: auto;
 }
 
 
 .logo {
 	/*text-align: center;*/
 	float: left;
-	color: #421C52;
+	color: #B76E79;
 	transform: rotate(90deg);
 	transform-origin: center;
 	font-size: 30px;
 	font-weight: bolder;
+	font: 'Comic Sans MS';
+	margin: auto;
 }
 .logotext {
 	text-align: center;
@@ -31,22 +39,16 @@
 	height: 45px;
 	right: 0;
 	font-size: 30px;
-	color: #421C52;
 	font: 'Verdana ';
 	font-weight: bold;
+	margin: auto;
+	color: #B76E79;
 }
 
 /*@font-face {
         font-family:'Process';
             src: url('./VAG Rounded Bold.ttf');
         }*/
-
-.main {
-	width: 100%;
-	height: 800px;
-	display: inline;
-	background: gray;
-}
 
 .root {
 	display: block;
@@ -59,23 +61,31 @@
 	height: 100%;
 }
 
+.main {
+	width: 100%;
+	height: 500px;
+	display: inline;
+	background: #DFE7ED;
+}
+
 .editor {
 	border: none;
 	resize: none;
-	background: gray;
-	width: 50%;
-	height: 100%;
+	background: #DFE7ED;
+	width: 48%;
+	height: 90%;
 	position: absolute;
-	padding: 10px;
+	padding: 1%;
+	margin: 0px;
 }
 
 .console {
 	overflow:hidden;
-	background: gray;
+	background: #DFE7ED;
 	left:50%;
-	width: 50%;
-	height: 100%;
+	width: 48%;
+	height: 90%;
 	top: 0;
 	position: relative;
-	padding: 10px;
+	padding: 1%;
 }

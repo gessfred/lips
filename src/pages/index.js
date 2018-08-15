@@ -66,6 +66,16 @@ class Sandbox extends React.Component {
 	}
 }
 
+class REPL extends React.Component {
+	render() {
+		return (
+			<div className='replmain'>
+				<Editor/>
+			</div>
+		)
+	}
+}
+
 class App extends React.Component {
 	render() {
 		return (
