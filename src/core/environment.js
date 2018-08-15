@@ -49,18 +49,29 @@ const List = function(head, tail){
 
 }
 
-const Nil = (function(){
-    return {}
-}())
+const nil = []
 
 const collections = environment
-    .extend('nil', Nil)
-    .extend('cons', ([head, ...tail]) => (tail !== Nil) ? [head].concat(tail) : [head])
-    .extend('car', (([head, ...tail]) => head))
-    .extend('cdr', (([head, ...tail]) => tail))
+    .extend('nil', nil)
+    .extend('cons', function([head, tail]) {
+        console.log(head+ '::' +tail + ' === ' + [head].concat(tail))
+        return (tail) ? [head].concat(tail) : [head]
+    })
+    .extend('car', function([head, ...tail]) {
+        console.log('HEAD: ' + head)
+        return head[0]
+    })
+    .extend('cdr', function([head, ...tail]){
+        const [h, t] = head
+        return t
+    })
+
+const globalEnv = arithmeticEnv.union(collections)
 
 module.exports = {
     'environment': environment,
     'arithmeticEnv': arithmeticEnv,
-    'collections': collections
+    'collections': collections,
+    'nil': nil,
+    'globalEnv': globalEnv
 }
