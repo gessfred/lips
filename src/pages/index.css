@@ -1,7 +1,16 @@
 /*html {
 	background: black;
 }*/
-
+.root {
+	display: block;
+	margin: none;
+	padding: none;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
 .topnav {
 	background: white;
 	margin: none;
@@ -9,46 +18,74 @@
 	left: 0;
 	width: 100%;
 	height: 45px;
-
+	border: 1px;
+	overflow: hidden;
+    border: 1px solid #ccc;
 }
 
 .icon {
 	background: white;
-	border: none;
 	width: 120px;
 	height: 45px;
-	display: inline;
 	margin: auto;
 	margin-left: 12px;
+	position: absolute;
+	text-align: center;
+	border: none;
+	outline: none;
+  cursor: pointer;
 }
 
 .icon:hover {
 	background: #DFE7ED;
 }
 
+.logo, .logotext, .biglogo, .biglogotext {
+	color: #B76E79;
+	text-align: center;
+}
+.documentation {
+	width: 100%;
+	display: block;
+	background: #DFE7ED;
+	position: relative;
+	margin: none;
+	padding: 12px;
+}
 
 .logo {
 	/*text-align: center;*/
-	float: left;
-	color: #B76E79;
+	height: 45px;
 	transform: rotate(90deg);
 	transform-origin: center;
 	font-size: 30px;
 	font-weight: bolder;
 	font: 'Comic Sans MS';
 	margin: auto;
+	left: 8px;
+	position: absolute;
 }
 .logotext {
-	text-align: center;
-	float: right;
 	margin: auto;
 	height: 45px;
-	right: 0;
 	font-size: 30px;
 	font: 'Verdana ';
 	font-weight: bold;
-	margin: auto;
-	color: #B76E79;
+	left: 16px;
+	position: relative;
+}
+
+.biglogo {
+	font-size: 70px;
+	text-align: center;
+	transform: rotate(90deg);
+	transform-origin: center;
+	margin: none;
+}
+
+.biglogotext {
+	text-align: center;
+	font-size: 50px;
 }
 
 /*@font-face {
@@ -56,23 +93,13 @@
             src: url('./VAG Rounded Bold.ttf');
         }*/
 
-.root {
-	display: block;
-	margin: none;
-	padding: none;
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-}
-
 .main {
 	width: 100%;
 	height: 500px;
 	display: inline;
 	background: #DFE7ED;
 }
+
 
 .editor {
 	border: none;
@@ -96,21 +123,34 @@
 	padding: 1%;
 }
 
-.topnavitem {
+.topnavitem, .topnavitemdeletable {
 	height: 45px;
 	width: 45px;
-	font-size: 30px;
+	font-size: 28px;
 	font-weight: bold;
 	border: none;
 	margin: auto;
-	margin-left: 16px;
 	background: white;
 	color: darkgray;
+	left: 150px;
+	text-align: center;
+	position: relative;
+	cursor: pointer;
 }
 
 .topnavitem:hover {
 	color: #DFE7ED;
 	border-radius: 50px;
+}
+
+.topnavitemdeletable {
+	color: darkgray;
+}
+
+.topnavitemdeletable:hover {
+	color: #DFE7ED;
+	border-radius: 50px;
+	/*background-color: #B76E79;*/
 }
 
 .inactivetab {
