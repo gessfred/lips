@@ -100,7 +100,7 @@ class App extends React.Component {
 			</button>
 		)
 	}
-
+//either save texts or keep all tabs in rotations :(
 	render() {
 		return (
 			<div className='root'>
@@ -113,7 +113,13 @@ class App extends React.Component {
 						this.setState({tabs: update})
 					}}>+</button>
 		    </div>
-		    {this.state.tabs[this.state.activeTab]}
+				{this.state.tabs.map((function(x, i) {
+					return (
+						<div className={i == this.state.activeTab ? '' : 'inactivetab'}>
+							{x}
+						</div>
+					)
+				}).bind(this))}
 		  </div>
 		)
 	}
