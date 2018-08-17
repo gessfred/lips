@@ -27,7 +27,7 @@ const Environment = function(bindings, rex){
         return [new Map(bindings), new Array(rex)]
     },
     union: function(that) {
-        const [those, others] = that.scope()
+        const [those, ...others] = that.scope()
         return Environment(new Map([...those, ...bindings]), rex.concat(others))
     }
 }}
@@ -60,11 +60,11 @@ const collections = environment
         return head[0]
     })
     .extend('cdr', function([head, ...tail]){
-        const [h, t] = head
+        const [h, ...t] = head
         return t
     })
 
-const globalEnv = arithmeticEnv.union(collections)
+const globalEnv = arithmeticEnv
 
 module.exports = {
     'environment': environment,

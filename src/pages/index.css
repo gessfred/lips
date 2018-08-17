@@ -23,6 +23,34 @@
     border: 1px solid #ccc;
 }
 
+.app {
+	display: inline;
+	width: 120px;
+	height: 45px;
+}
+
+.logo {
+	/*text-align: center;*/
+	height: 45px;
+	transform: rotate(90deg);
+	transform-origin: center;
+	font-size: 30px;
+	font-weight: bolder;
+	margin: auto;
+	left: 12px;
+	float: left;
+}
+.logotext {
+	margin: auto;
+	height: 45px;
+	font-size: 30px;
+	font-weight: bold;
+	left: 8px;
+	position: relative;
+	bottom: -3px;
+}
+
+
 .icon {
 	background: white;
 	width: 120px;
@@ -53,25 +81,6 @@
 	padding: 12px;
 }
 
-.logo {
-	/*text-align: center;*/
-	height: 45px;
-	transform: rotate(90deg);
-	transform-origin: center;
-	font-size: 30px;
-	font-weight: bolder;
-	margin: auto;
-	left: 8px;
-	position: absolute;
-}
-.logotext {
-	margin: auto;
-	height: 45px;
-	font-size: 30px;
-	font-weight: bold;
-	left: 16px;
-	position: relative;
-}
 
 .biglogo {
 	font-size: 70px;
@@ -108,14 +117,14 @@
 }
 
 .console {
-	overflow:hidden;
+	border-left: 1px solid lightgray;
 	background: #DFE7ED;
 	width: 48%;
-	height: 100%;
 	top: 0;
 	padding: 1%;
 	left: 50%;
 	position: relative;
+	height: 800px;
 }
 
 .editor, .console {
@@ -128,7 +137,7 @@
 	height: 45px;
 	width: 45px;
 	font-size: 28px;
-	font-weight: bold;
+	font-weight: 200;
 	border: none;
 	margin: auto;
 	background: white;

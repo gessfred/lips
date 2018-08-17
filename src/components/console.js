@@ -1,6 +1,6 @@
 import React from 'react'
 const {evalAll} = require('../core/interpreter')
-const {environment, globalEnv} = require('../core/environment')
+const {globalEnv} = require('../core/environment')
 
 class Console extends React.Component {
 
@@ -12,6 +12,7 @@ class Console extends React.Component {
 	}
 
 	update(content) {
+		console.log('updating...' + evalAll(content, globalEnv))
 		this.setState({content: evalAll(content, globalEnv)})
 	}
 
@@ -19,7 +20,10 @@ class Console extends React.Component {
 		//write line number
 		return (
 			<div className='console'>
-				{this.state.content.map((x, i) => <div>{(i + 1) + ': '+  x}</div>)}
+				{console.log(this.state.content)}
+				{
+					this.state.content.map((x, i) => <div>{(i + 1) + ': '+  x}</div>)
+				}
 			</div>
 		)
 	}

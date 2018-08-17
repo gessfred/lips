@@ -63,13 +63,14 @@ const evaluate = (s, env) => evalLisp(parse(s), env)
 
 const evalAllParsed = function(ss, startEnv) {
     const [head, ...tail] = ss
+    console.log(head + '::' + tail)
     try {
         //console.log(head + '::' + tail)
         const res = evalLisp(head, startEnv)
         return [res.value].concat(evalAllParsed(tail, res.env))
     }
     catch(error) {
-        //console.log(error)
+        console.log(error)
         return [] // we abort the sequence
     }
 } 
@@ -77,7 +78,7 @@ const evalAllParsed = function(ss, startEnv) {
 const evalAll = function(s, env) {
     try {
         const x = parse('(' + s + ')')
-        //console.log(s + ' === ' + x)
+        console.log(s + ' === ' + x)
         return evalAllParsed(x, env)
     }
     catch(allErrors) {

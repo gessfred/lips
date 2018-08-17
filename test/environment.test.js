@@ -1,6 +1,6 @@
 var assert = require('assert');
 var expect = require('chai').expect;
-var {environment, collections} = require('../src/core/environment')
+var {environment, collections, nil, globalEnv} = require('../src/core/environment')
 const {evaluate, evalLisp} = require('../src/core/interpreter')
 
 describe('environment', () => {
@@ -35,6 +35,9 @@ describe('environment', () => {
         expect(res.lookup('a')).to.equal(1)
         expect(res.lookup('b')).to.equal(2)
     })
+    it('global environment', () => {
+        expect(globalEnv.lookup('+')).to.throw
+    })
     //add weird flows like extend -> extendRec -> extendMulti ...
     //like union -> extendRec -> union ...
     //solve scopes issues like extend(x, 2).extend(x, 1)
@@ -58,10 +61,19 @@ describe('collections', () => {
         
     })
     it('car should return head', () => {
+        console.log(evaluate('(cons 1 nil)', collections).value)
         expect(evaluate('(car (cons 1 nil))', collections).value).to.equal(1)
-        expect(evaluate('(car (cons 1 2))', collections).value).to.equal(1)
+        
+        //expect(evaluate('(car (cons 1 2))', collections).value).to.equal(1)
+    })
+    it('cdr should return second element of pair (not covered for now)', () => {
+        //expect(evaluate('(cdr (cons 1 2))', collections).value).to.equal(2)
     })
     it('cdr should return tail', () => {
-
+        expect(evaluate('(cdr (cons 1 nil))', collections).value).to.be.empty//.equal(nil)//.equal([])
     })
+    it('access to second element', () => {
+        expect(evaluate('(car (cdr (cons 1 (cons 2 nil))))', collections).value).to.equal(2)
+    })
+
 })
