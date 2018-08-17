@@ -1,3 +1,11 @@
+const concatMaps = function (map, ...iterables) {
+    for (const iterable of iterables) {
+        for (const item of iterable) {
+            map.set(...item);
+        }
+    }
+}
+
 const Environment = function(bindings, rex){
     return {
     lookup: function(name) {
@@ -29,7 +37,9 @@ const Environment = function(bindings, rex){
     },
     union: function(that) {
         const [those, ...others] = that.scope()
-        return Environment(new Map(function*() { yield* bindings; yield* those; }()), rex.concat(others))
+        const res = new Map(bindings)
+        concatMaps(res, those)
+        return Environment(res, rex.concat(others))
     }
 }}
 
@@ -64,6 +74,9 @@ const collections = environment
         const [h, ...t] = head
         return t
     })
+
+const logic = environment
+    .extend
 
 const globalEnv = math.union(collections)
 

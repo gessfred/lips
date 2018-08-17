@@ -35,9 +35,6 @@ describe('environment', () => {
         expect(res.lookup('a')).to.equal(1)
         expect(res.lookup('b')).to.equal(2)
     })
-    it('global environment', () => {
-        expect(globalEnv.lookup('+')).to.throw
-    })
     //add weird flows like extend -> extendRec -> extendMulti ...
     //like union -> extendRec -> union ...
     //solve scopes issues like extend(x, 2).extend(x, 1)
@@ -76,4 +73,10 @@ describe('collections', () => {
         expect(evaluate('(car (cdr (cons 1 (cons 2 nil))))', collections).value).to.equal(2)
     })
 
+})
+
+describe('global environment', () => {
+    it('+', () => {
+        expect(evaluate('(+ 1 2)', globalEnv).value).to.equal(3)
+    })
 })

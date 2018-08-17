@@ -2,7 +2,7 @@ const assert = require('assert');
 const expect = require('chai').expect;
 const {parse, lispTokenizer} = require('../src/core/parser')
 const {evaluate, evalLisp, evalAll} = require('../src/core/interpreter')
-const {environment, arithmeticEnv} = require('../src/core/environment')
+const {environment, math} = require('../src/core/environment')
 
 
 
@@ -32,10 +32,10 @@ describe('evaluate (parse + eval) (text inputs)', () => {
     
     describe('fp', () => {
         it('arithmetic operators', () => {
-            pureevalon('(+ 1 2)', 3, arithmeticEnv)
+            pureevalon('(+ 1 2)', 3, math)
         })
         it('trivial lambda', () => {
-            pureevalon('((lambda (x y) (+ x y))  1 2)', 3, arithmeticEnv)
+            pureevalon('((lambda (x y) (+ x y))  1 2)', 3, math)
             
         })
     })
@@ -48,31 +48,31 @@ describe('evaluate (parse + eval) (text inputs)', () => {
             
         })
         it('def lambda expansion', () => {
-            const w = evaluate('(def (double x) (+ x x))', arithmeticEnv)
+            const w = evaluate('(def (double x) (+ x x))', math)
             pureevalon('(double 10)', 20, w.env)
         })
         it('def max funtion', () => {
-            const max = evaluate('(def (max x y) (if (> x y) x y))', arithmeticEnv)
-            expect(max.env).to.not.be.equal(arithmeticEnv)
+            const max = evaluate('(def (max x y) (if (> x y) x y))', math)
+            expect(max.env).to.not.be.equal(math)
             expect(() => max.env.lookup('max')).to.not.throw
             expect(evaluate('(max 3 5)', max.env).value).to.equal(5)
             expect(evaluate('(max 5 3)', max.env).value).to.equal(5)
         })
         it('def recursive', () => {
-            const fact = evaluate("(def (! n) (if (> n 1) (* n (! (- n 1))) 1))", arithmeticEnv)
-            expect(fact.env).to.not.be.equal(arithmeticEnv)
+            const fact = evaluate("(def (! n) (if (> n 1) (* n (! (- n 1))) 1))", math)
+            expect(fact.env).to.not.be.equal(math)
             expect(() => fact.env.lookup('!')).to.not.throw
             pureevalon('(! 5)', 120, fact.env)
         })
     })
     describe('cases', () => {
         it('trivial case with only else', () => {
-            pureevalon('(case 3 (else 2))', 2, arithmeticEnv)
+            pureevalon('(case 3 (else 2))', 2, math)
         })
         it('simple case', () => {
-            pureevalon('(case 3 (3 1) (else 3))', 1, arithmeticEnv)
-            pureevalon('(case 2 (3 1) (else 3))', 3, arithmeticEnv)
-            pureevalon('(case 2 (3 1) (2 2) (else 3))', 2, arithmeticEnv)
+            pureevalon('(case 3 (3 1) (else 3))', 1, math)
+            pureevalon('(case 2 (3 1) (else 3))', 3, math)
+            pureevalon('(case 2 (3 1) (2 2) (else 3))', 2, math)
         })
     })
 })
@@ -89,7 +89,7 @@ describe('evalAll', () => {
         isSafe('abloublou 1 2')
     })
     it('evalAll simple querries', () => {
-        console.log(evalAll('(def x 3)(+ x 1)', arithmeticEnv))
+        console.log(evalAll('(def x 3)(+ x 1)', math))
         expect(evalAll('(def x 3)(x)', environment)[1]).to.equal(3)
     })
 })
