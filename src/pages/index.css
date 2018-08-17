@@ -60,7 +60,6 @@
 	transform-origin: center;
 	font-size: 30px;
 	font-weight: bolder;
-	font: 'Comic Sans MS';
 	margin: auto;
 	left: 8px;
 	position: absolute;
@@ -69,7 +68,6 @@
 	margin: auto;
 	height: 45px;
 	font-size: 30px;
-	font: 'Verdana ';
 	font-weight: bold;
 	left: 16px;
 	position: relative;
@@ -81,17 +79,14 @@
 	transform: rotate(90deg);
 	transform-origin: center;
 	margin: none;
+	font: 'Farisi';
 }
 
 .biglogotext {
 	text-align: center;
 	font-size: 50px;
+	font: 'Verdana';
 }
-
-/*@font-face {
-        font-family:'Process';
-            src: url('./VAG Rounded Bold.ttf');
-        }*/
 
 .main {
 	width: 100%;
@@ -115,12 +110,18 @@
 .console {
 	overflow:hidden;
 	background: #DFE7ED;
-	left:50%;
 	width: 48%;
-	height: 90%;
+	height: 100%;
 	top: 0;
-	position: relative;
 	padding: 1%;
+	left: 50%;
+	position: relative;
+}
+
+.editor, .console {
+		font-size: 15px;
+		font: 'Verdana ';
+		font-weight: 300;
 }
 
 .topnavitem, .topnavitemdeletable {
