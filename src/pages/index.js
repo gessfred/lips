@@ -5,14 +5,15 @@ import logoFont from '../resources/VAG Rounded Bold.ttf'
 import Sandbox from '../components/sandbox.js'
 import Documentation from '../components/doc.js'
 
-
 const Icon = (props) => (
-	<button className='icon'>
-			<div className='logo'>()</div>
-			<div className='logotext'>lips</div>
+	<button className='icon' onClick={props.onClick}>
+			<div className='app'>
+				<div className='logo'>()</div>
+				<div className='logotext' style={{font: logoFont}}>lips</div>
+			</div>
 	</button>
 )
-
+//<div className='logotext'>lips</div>
 class REPL extends React.Component {
 	render() {
 		return (
@@ -24,7 +25,6 @@ class REPL extends React.Component {
 }
 
 class App extends React.Component {
-
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -32,6 +32,7 @@ class App extends React.Component {
 			activeTab: 0
 		}
 	}
+
 //onClick={() => this.setState({activeTab: i})}
 	tabButton(x, i) {
 		const active = i == this.state.activeTab
@@ -39,7 +40,11 @@ class App extends React.Component {
 		return (
 			<button
 				className={active ? 'topnavitemdeletable' : 'topnavitem'}
-				onClick={active ? () => this.setState({tabs: this.state.tabs.slice(idx, idx), activeTab: 0}) : () => this.setState({activeTab: i})}
+				onClick={active ? (() => {
+					const cpy = this.state.tabs.slice()
+					cpy.splice(idx, 1)
+					this.setState({tabs: cpy, activeTab: idx - 1})
+				}) : () => this.setState({activeTab: i})}
 			>
 				{active ? 'x' : i + 1}
 			</button>
@@ -50,7 +55,11 @@ class App extends React.Component {
 		return (
 			<div className='root'>
 		    <div className='topnav'>
-					<Icon/>
+					<Icon onClick={() => {
+						const update = this.state.tabs.slice()
+						update.push(<Documentation/>)
+						this.setState({tabs: update})
+					}}/>
 					{this.state.tabs.map((x, i) => this.tabButton(x, i))}
 					<button className='topnavitem' onClick={() => {
 						const update = this.state.tabs.slice()
