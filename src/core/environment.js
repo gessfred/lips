@@ -6,6 +6,7 @@ const Environment = function(bindings, rex){
         else return g
     },
     dump: function() {
+        console.log(bindings)
         return Array.from(bindings.keys())
     },
     extend: function(name, value) {
@@ -28,13 +29,13 @@ const Environment = function(bindings, rex){
     },
     union: function(that) {
         const [those, ...others] = that.scope()
-        return Environment(new Map([...those, ...bindings]), rex.concat(others))
+        return Environment(new Map(function*() { yield* bindings; yield* those; }()), rex.concat(others))
     }
 }}
 
 const environment = Environment(new Map(), new Array())
 
-const arithmeticEnv = environment
+const math = environment
     .extend('+', ([x, y]) => x + y)
     .extend('-', ([x, y]) => x - y)
     .extend('*', ([x, y]) => x * y)
@@ -64,11 +65,11 @@ const collections = environment
         return t
     })
 
-const globalEnv = arithmeticEnv
+const globalEnv = math.union(collections)
 
 module.exports = {
     'environment': environment,
-    'arithmeticEnv': arithmeticEnv,
+    'math': math,
     'collections': collections,
     'nil': nil,
     'globalEnv': globalEnv

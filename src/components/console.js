@@ -1,6 +1,9 @@
 import React from 'react'
 const {evalAll} = require('../core/interpreter')
-const {globalEnv} = require('../core/environment')
+const {environment, math, collections} = require('../core/environment')
+
+const globe = math.union(collections)
+console.log(globe.dump())
 
 class Console extends React.Component {
 
@@ -12,8 +15,7 @@ class Console extends React.Component {
 	}
 
 	update(content) {
-		console.log('updating...' + evalAll(content, globalEnv))
-		this.setState({content: evalAll(content, globalEnv)})
+		this.setState({content: evalAll(content, globe)})
 	}
 
 	render() {

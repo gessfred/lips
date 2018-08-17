@@ -148,19 +148,16 @@
 	cursor: pointer;
 }
 
-.topnavitem:hover {
+.topnavitem:hover, .topnavitemdeletable:hover {
 	color: #DFE7ED;
-	border-radius: 50px;
 }
 
 .topnavitemdeletable {
-	color: darkgray;
+	background: #DFE7ED
 }
 
 .topnavitemdeletable:hover {
-	color: #DFE7ED;
-	border-radius: 50px;
-	/*background-color: #B76E79;*/
+	color: #B76E79;
 }
 
 .inactivetab {

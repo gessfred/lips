@@ -8,7 +8,7 @@ import Documentation from '../components/doc.js'
 const Icon = (props) => (
 	<button className='icon' onClick={props.onClick}>
 			<div className='app'>
-				<div className='logo'>()</div>
+				<div className='logo'>( )</div>
 				<div className='logotext' style={{font: logoFont}}>lips</div>
 			</div>
 	</button>

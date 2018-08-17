@@ -12,7 +12,6 @@ const flat = (x) => [].concat(x)
 
 const evalLisp = function(x, env) {
     const [head, ...tail] = x
-    //console.log(env.dump() + ' _:_ ' + head + '::' + tail)
     if(tail.length == 0) {
         if(int.test(x)) return wrapper(parseInt(x), env)
         else return wrapper(env.lookup(head), env)
@@ -63,14 +62,11 @@ const evaluate = (s, env) => evalLisp(parse(s), env)
 
 const evalAllParsed = function(ss, startEnv) {
     const [head, ...tail] = ss
-    console.log(head + '::' + tail)
     try {
-        //console.log(head + '::' + tail)
         const res = evalLisp(head, startEnv)
         return [res.value].concat(evalAllParsed(tail, res.env))
     }
     catch(error) {
-        console.log(error)
         return [] // we abort the sequence
     }
 } 
@@ -78,7 +74,7 @@ const evalAllParsed = function(ss, startEnv) {
 const evalAll = function(s, env) {
     try {
         const x = parse('(' + s + ')')
-        console.log(s + ' === ' + x)
+        console.log(env.dump())
         return evalAllParsed(x, env)
     }
     catch(allErrors) {
