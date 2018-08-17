@@ -12,6 +12,7 @@ class Editor extends React.Component {
 			<textarea
 				className='editor'
 				ref='editor'
+				autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
 				onKeyUp={(e) => {
 
 					if(isAlphaNumeric(e)) {

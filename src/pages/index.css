@@ -114,6 +114,7 @@
 	position: absolute;
 	padding: 1%;
 	margin: 0px;
+	font-weight: bolder;
 }
 
 .console {
@@ -125,12 +126,13 @@
 	left: 50%;
 	position: relative;
 	height: 800px;
+	font-weight: 500;
 }
 
 .editor, .console {
 		font-size: 15px;
-		font: 'Verdana ';
-		font-weight: 300;
+		font-family: 'Andale Mono';
+
 }
 
 .topnavitem, .topnavitemdeletable {

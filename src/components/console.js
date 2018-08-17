@@ -3,7 +3,6 @@ const {evalAll} = require('../core/interpreter')
 const {environment, math, collections} = require('../core/environment')
 
 const globe = math.union(collections)
-console.log(globe.dump())
 
 class Console extends React.Component {
 
@@ -22,10 +21,7 @@ class Console extends React.Component {
 		//write line number
 		return (
 			<div className='console'>
-				{console.log(this.state.content)}
-				{
-					this.state.content.map((x, i) => <div>{(i + 1) + ': '+  x}</div>)
-				}
+				{this.state.content.map((x, i) => <div>{(i + 1) + ': '+  x}</div>)}
 			</div>
 		)
 	}
