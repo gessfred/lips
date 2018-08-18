@@ -12,7 +12,7 @@ class Editor extends React.Component {
 			<textarea
 				className='editor'
 				ref='editor'
-				autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+				autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"
 				onKeyUp={(e) => {
 
 					if(isAlphaNumeric(e)) {
@@ -21,6 +21,7 @@ class Editor extends React.Component {
 						this.props.onUpdate(this.refs.editor.value)
 						this.refs.editor.setSelectionRange(update.caretPosition, update.caretPosition)
 					}
+
 				}} //balance this.refs.editor
 			/>
 		)

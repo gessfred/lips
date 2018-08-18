@@ -1,7 +1,6 @@
 import React from 'react'
 import Link from 'gatsby-link'
 import './index.css'
-import logoFont from '../resources/VAG Rounded Bold.ttf'
 import Sandbox from '../components/sandbox.js'
 import Documentation from '../components/doc.js'
 
@@ -9,7 +8,7 @@ const Icon = (props) => (
 	<button className='icon' onClick={props.onClick}>
 			<div className='app'>
 				<div className='logo'>( )</div>
-				<div className='logotext' style={{font: logoFont}}>lips</div>
+				<div className='logotext'>lips</div>
 			</div>
 	</button>
 )
@@ -75,10 +74,14 @@ class App extends React.Component {
 					)
 				}).bind(this))
 				: <Documentation />
-			}
+				}
 		  </div>
 		)
 	}
 }
+/*
+<div className='bottomnav'>
+	environment
+</div>*/
 
 export default App

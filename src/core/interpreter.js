@@ -32,6 +32,8 @@ const evalLisp = function(x, env) {
             }
             case 'def': {
                 const [[name, ...args], body, ...expr] = tail
+                console.log([name, ...args])
+                console.log('NAME ' + name)
                 if(args.length > 0) 
                     if(expr.length == 0)return evalLisp(['def', [name], ['lambda', args, body]], env)
                     else return evalLisp(['def', [name], ['lambda', args, body]], env)
@@ -64,6 +66,8 @@ const evalAllParsed = function(ss, startEnv) {
     const [head, ...tail] = ss
     try {
         const res = evalLisp(head, startEnv)
+        console.log(typeof v === "function")
+        //{}.toString.call(functionToCheck) === '[object Function]'
         return [res.value].concat(evalAllParsed(tail, res.env))
     }
     catch(error) {
@@ -74,7 +78,6 @@ const evalAllParsed = function(ss, startEnv) {
 const evalAll = function(s, env) {
     try {
         const x = parse('(' + s + ')')
-        console.log(env.dump())
         return evalAllParsed(x, env)
     }
     catch(allErrors) {

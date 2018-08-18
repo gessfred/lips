@@ -1,3 +1,5 @@
+const {evaluate} = require('./interpreter')
+
 const concatMaps = function (map, ...iterables) {
     for (const iterable of iterables) {
         for (const item of iterable) {
@@ -40,6 +42,10 @@ const Environment = function(bindings, rex){
         const res = new Map(bindings)
         concatMaps(res, those)
         return Environment(res, rex.concat(others))
+    },
+    describe: function(name, description) {
+        console.log('(def ' + name + ' ' + description + ')')
+        return evaluate(new String('(def ' + name + ' ' + description + ')'), this).env 
     }
 }}
 
@@ -74,9 +80,8 @@ const collections = environment
         const [h, ...t] = head
         return t
     })
+    .extend('null?', ([list]) => list == nil)
 
-const logic = environment
-    .extend
 
 const globalEnv = math.union(collections)
 

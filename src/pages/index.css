@@ -9,7 +9,6 @@
 	left: 0;
 	top: 0;
 	width: 100%;
-	height: 100%;
 }
 .topnav {
 	background: white;
@@ -29,38 +28,53 @@
 	height: 45px;
 }
 
-.logo {
-	/*text-align: center;*/
-	height: 45px;
+.logo, .biglogo {
 	transform: rotate(90deg);
 	transform-origin: center;
-	font-size: 30px;
+	font-family: 'Farisi';
 	font-weight: bolder;
 	margin: auto;
-	left: 12px;
-	float: left;
+}
+
+.logo {
+	font-size: 38px;
+	height: 45px;
+	position: absolute;
+	left: 32px;
+}
+.biglogo {
+	font-size: 70px;
+	text-align: center;
+	height: 100px;
+	width: 100%;
+}
+.logotext, .biglogotext {
+	font-family: 'VAG Rounded';
 }
 .logotext {
 	margin: auto;
 	height: 45px;
 	font-size: 30px;
 	font-weight: bold;
-	left: 8px;
+	left: 16px;
 	position: relative;
-	bottom: -3px;
+	top: 10px;
 }
-
-
+.biglogotext {
+	text-align: center;
+	font-size: 50px;
+	top: 0;
+	width: 100%;
+	position: relative;
+}
 .icon {
 	background: white;
 	width: 120px;
 	height: 45px;
 	margin: auto;
-	margin-left: 12px;
+	margin-left: 16px;
 	position: absolute;
-	text-align: center;
 	border: none;
-	outline: none;
   cursor: pointer;
 }
 
@@ -73,28 +87,20 @@
 	text-align: center;
 }
 .documentation {
-	width: 100%;
-	display: block;
+	/*width: 100%;
 	background: #DFE7ED;
-	position: relative;
 	margin: none;
-	padding: 12px;
+	padding: 24px;
+	color: gray;
+	overflow:scroll;
+	height: 3000px;*/
+	overflow: auto;
 }
 
-
-.biglogo {
-	font-size: 70px;
-	text-align: center;
-	transform: rotate(90deg);
-	transform-origin: center;
-	margin: none;
-	font: 'Farisi';
-}
-
-.biglogotext {
-	text-align: center;
-	font-size: 50px;
-	font: 'Verdana';
+.syntax {
+	overflow: auto;
+	color: tomato;
+	background: black;
 }
 
 .main {
@@ -129,10 +135,9 @@
 	font-weight: 500;
 }
 
-.editor, .console {
+.editor, .console, .documentation {
 		font-size: 15px;
 		font-family: 'Andale Mono';
-
 }
 
 .topnavitem, .topnavitemdeletable {

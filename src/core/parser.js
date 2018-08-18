@@ -51,7 +51,7 @@ const sanitize = function(s, caretPosition) {
             switch(token) {
                 case ')': 
                     if(stack <= 0) return scan(base, stack, false, false)
-                    else return scan(base + token, stack - 1, false, stack - 1 == 0)
+                    else return scan(base + token, stack - 1, true, stack - 1 == 0)
                 case '(': 
                     return scan(base + correction + (needReturn ? '\n' : '') + token, stack + 1, false, false)
                 default:
