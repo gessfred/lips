@@ -92,4 +92,11 @@ describe('evalAll', () => {
         console.log(evalAll('(def x 3)(+ x 1)', math))
         expect(evalAll('(def x 3)(x)', environment)[1]).to.equal(3)
     })
+})//(+ x (+ y z))
+
+describe('encounterd bugs', () => {
+    it('(+ (+ 1 2)(+ 1 y))', () => {
+        const env = evaluate('(def y 5)', math).env
+        expect(evaluate('(+ (+ 1 2)(+ 1 y))', env).value).to.equal(9)
+    })
 })

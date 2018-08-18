@@ -90,17 +90,17 @@
 	/*width: 100%;
 	background: #DFE7ED;
 	margin: none;
-	padding: 24px;
+
 	color: gray;
 	overflow:scroll;
 	height: 3000px;*/
 	overflow: auto;
+	padding: 24px;
 }
 
 .syntax {
 	overflow: auto;
-	color: tomato;
-	background: black;
+	color: #B76E79;
 }
 
 .main {
@@ -153,6 +153,10 @@
 	text-align: center;
 	position: relative;
 	cursor: pointer;
+}
+
+.topnavoption {
+	color: red;
 }
 
 .topnavitem:hover, .topnavitemdeletable:hover {

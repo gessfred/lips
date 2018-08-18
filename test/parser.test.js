@@ -135,4 +135,9 @@ describe('sanitize', () => {
 
         })
     })
+    describe('caretPosition', () => {
+        it('open parenthesis', () => {
+            expect(sanitize('(   ', 1).caretPosition).to.equal(1)
+        })
+    })
 }) 

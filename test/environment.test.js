@@ -2,6 +2,7 @@ var assert = require('assert');
 var expect = require('chai').expect;
 var {environment, collections, nil, globalEnv} = require('../src/core/environment')
 const {evaluate, evalLisp} = require('../src/core/interpreter')
+const {parse} = require('../src/core/parser')
 
 describe('environment', () => {
     const env1 = environment.extend('x', 3);
@@ -34,6 +35,16 @@ describe('environment', () => {
         expect(() => res.lookup('b')).to.not.throw
         expect(res.lookup('a')).to.equal(1)
         expect(res.lookup('b')).to.equal(2)
+    })
+    it('simple description', () => {
+        //const env = environment.describe('and', '(lambda (x y) (if x y 0))')
+        //const test = (x, y, z) => expect(evaluate('(and ' + x + ' ' + y + ')', env).value).to.equal(z)
+        /*test(0, 0, 0)
+        test(0, 1, 0)
+        test(1, 0, 0)
+        test(1, 1, 1)*/
+        const cst = evaluate('(def (and x y) (if x y 0))', globalEnv).env
+        expect(evaluate('(and 0 1)', cst).value).to.equal(false)
     })
     //add weird flows like extend -> extendRec -> extendMulti ...
     //like union -> extendRec -> union ...
@@ -72,7 +83,12 @@ describe('collections', () => {
     it('access to second element', () => {
         expect(evaluate('(car (cdr (cons 1 (cons 2 nil))))', collections).value).to.equal(2)
     })
-
+    it('null? operator on nil', () => {
+        expect(evaluate('(null? nil)', collections).value).to.equal(true)
+    })
+    it('null? operator on non empty list', () => {
+        expect(evaluate('(null? (cons 1 nil))', collections).value).to.equal(false)
+    })
 })
 
 describe('global environment', () => {
