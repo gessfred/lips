@@ -75,7 +75,7 @@ class App extends React.Component {
 					}}>+</button>
 
 					<button className='topnavitem'>
-						'okok'
+						<close/>
 					</button>
 		    </div>
 				{(this.state.tabs.length != 0) ? this.state.tabs.map((function(x, i) {
